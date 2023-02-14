@@ -1,0 +1,168 @@
+from sly import Lexer
+from sly import Parser
+
+# simple programming language, this is a present to my wife Vestia Zeta 
+
+# lexer class
+class ZetaLexer(Lexer):
+	tokens = { UWU, APACB, IYAH }
+	ignore = '\t '
+	literals = { '=', '+', '-', '/',
+				'*', '(', ')', ',', ';'}
+
+	# Def tokens as regex
+	UWU = r'[a-zA-Z_][a-zA-Z0-9_]*'
+	IYAH = r'\".*?\"'
+
+	# APACB token
+	@_(r'\d+')
+	def APACB(self, t):
+		
+		# convert into integer
+		t.value = int(t.value)
+		return t
+
+	# Comment token
+	@_(r'//.*')
+	def COMMENT(self, t):
+		pass
+
+	# Newline token(used only for showing
+	# errors in new line)
+	@_(r'\n+')
+	def newline(self, t):
+		self.lineno = t.value.count('\n')
+
+# parser class
+class ZetaParser(Parser):
+    # tokens are passed from lexer to parser
+    tokens = ZetaLexer.tokens
+  
+    precedence = (
+        ('left', '+', '-'),
+        ('left', '*', '/'),
+        ('right', 'UMINUS'),
+    )
+  
+    def __init__(self):
+        self.env = { }
+  
+    @_('')
+    def statement(self, p):
+        pass
+  
+    @_('var_assign')
+    def statement(self, p):
+        return p.var_assign
+  
+    @_('UWU "=" expr')
+    def var_assign(self, p):
+        return ('var_assign', p.UWU, p.expr)
+  
+    @_('UWU "=" IYAH')
+    def var_assign(self, p):
+        return ('var_assign', p.UWU, p.IYAH)
+  
+    @_('expr')
+    def statement(self, p):
+        return (p.expr)
+  
+    @_('expr "+" expr')
+    def expr(self, p):
+        return ('add', p.expr0, p.expr1)
+  
+    @_('expr "-" expr')
+    def expr(self, p):
+        return ('sub', p.expr0, p.expr1)
+  
+    @_('expr "*" expr')
+    def expr(self, p):
+        return ('mul', p.expr0, p.expr1)
+  
+    @_('expr "/" expr')
+    def expr(self, p):
+        return ('div', p.expr0, p.expr1)
+  
+    @_('"-" expr %prec UMINUS')
+    def expr(self, p):
+        return p.expr
+  
+    @_('UWU')
+    def expr(self, p):
+        return ('var', p.UWU)
+  
+    @_('APACB')
+    def expr(self, p):
+        return ('num', p.APACB)
+
+# execute class
+class ZetaExecute:
+    def __init__(self, tree, env):
+        self.env = env
+        result = self.akjgmw(tree)
+        if result is not None and isinstance(result, int):
+            print(result)
+        if isinstance(result, str) and result[0] == '"':
+            print(result)
+  
+    def akjgmw(self, node):
+  
+        if isinstance(node, int):
+            return node
+        if isinstance(node, str):
+            return node
+  
+        if node is None:
+            return None
+  
+        if node[0] == 'program':
+            if node[1] == None:
+                self.akjgmw(node[2])
+            else:
+                self.akjgmw(node[1])
+                self.akjgmw(node[2])
+  
+        if node[0] == 'num':
+            return node[1]
+  
+        if node[0] == 'str':
+            return node[1]
+  
+        if node[0] == 'add':
+            return self.akjgmw(node[1]) + self.akjgmw(node[2])
+        elif node[0] == 'sub':
+            return self.akjgmw(node[1]) - self.akjgmw(node[2])
+        elif node[0] == 'mul':
+            return self.akjgmw(node[1]) * self.akjgmw(node[2])
+        elif node[0] == 'div':
+            return self.akjgmw(node[1]) / self.akjgmw(node[2])
+  
+        if node[0] == 'var_assign':
+            self.env[node[1]] = self.akjgmw(node[2])
+            return node[1]
+        
+        # if variable was undefined
+        if node[0] == 'var':
+            try:
+                return self.env[node[1]]
+            except LookupError:
+                print("Humph undefined variable >:( '"+node[1]+"' ")
+                return 0
+
+# run all function ^w^
+if __name__ == '__main__':
+    lexer = ZetaLexer()
+    parser = ZetaParser()
+    print('ZetaLang \n A Simp Programming Language with Python')
+    env = {}
+      
+    while True:
+        try:
+            text = input('Hallo ^u^ => ')
+          
+        except EOFError:
+            break
+          
+        if text:
+            tree = parser.parse(lexer.tokenize(text))
+            ZetaExecute(tree, env)
