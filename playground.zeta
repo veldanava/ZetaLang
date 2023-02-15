@@ -1,7 +1,7 @@
 from sly import Lexer
 from sly import Parser
 
-# simple programming language, this is a present to my wife Vestia Zeta 
+# simple programming language, this is a present to my wife Vestia Zeta
 
 # lexer class
 class ZetaLexer(Lexer):
@@ -17,7 +17,7 @@ class ZetaLexer(Lexer):
 	# APACB token
 	@_(r'\d+')
 	def APACB(self, t):
-		
+
 		# convert into integer
 		t.value = int(t.value)
 		return t
@@ -37,60 +37,60 @@ class ZetaLexer(Lexer):
 class ZetaParser(Parser):
     # tokens are passed from lexer to parser
     tokens = ZetaLexer.tokens
-  
+
     precedence = (
         ('left', '+', '-'),
         ('left', '*', '/'),
         ('right', 'UMINUS'),
     )
-  
+
     def __init__(self):
         self.env = { }
-  
+
     @_('')
     def statement(self, p):
         pass
-  
+
     @_('var_assign')
     def statement(self, p):
         return p.var_assign
-  
+
     @_('UWU "=" expr')
     def var_assign(self, p):
         return ('var_assign', p.UWU, p.expr)
-  
+
     @_('UWU "=" IYAH')
     def var_assign(self, p):
         return ('var_assign', p.UWU, p.IYAH)
-  
+
     @_('expr')
     def statement(self, p):
         return (p.expr)
-  
+
     @_('expr "+" expr')
     def expr(self, p):
         return ('add', p.expr0, p.expr1)
-  
+
     @_('expr "-" expr')
     def expr(self, p):
         return ('sub', p.expr0, p.expr1)
-  
+
     @_('expr "*" expr')
     def expr(self, p):
         return ('mul', p.expr0, p.expr1)
-  
+
     @_('expr "/" expr')
     def expr(self, p):
         return ('div', p.expr0, p.expr1)
-  
+
     @_('"-" expr %prec UMINUS')
     def expr(self, p):
         return p.expr
-  
+
     @_('UWU')
     def expr(self, p):
         return ('var', p.UWU)
-  
+
     @_('APACB')
     def expr(self, p):
         return ('num', p.APACB)
@@ -104,30 +104,30 @@ class ZetaExecute:
             print(result)
         if isinstance(result, str) and result[0] == '"':
             print(result)
-  
+
     def akjgmw(self, node):
-  
+
         if isinstance(node, int):
             return node
         if isinstance(node, str):
             return node
-  
+
         if node is None:
             return None
-  
+
         if node[0] == 'program':
             if node[1] == None:
                 self.akjgmw(node[2])
             else:
                 self.akjgmw(node[1])
                 self.akjgmw(node[2])
-  
+
         if node[0] == 'num':
             return node[1]
-  
+
         if node[0] == 'str':
             return node[1]
-  
+
         if node[0] == 'add':
             return self.akjgmw(node[1]) + self.akjgmw(node[2])
         elif node[0] == 'sub':
@@ -136,11 +136,11 @@ class ZetaExecute:
             return self.akjgmw(node[1]) * self.akjgmw(node[2])
         elif node[0] == 'div':
             return self.akjgmw(node[1]) / self.akjgmw(node[2])
-  
+
         if node[0] == 'var_assign':
             self.env[node[1]] = self.akjgmw(node[2])
             return node[1]
-        
+
         # if variable was undefined
         if node[0] == 'var':
             try:
@@ -155,14 +155,14 @@ if __name__ == '__main__':
     parser = ZetaParser()
     print('ZetaLang \n A Simp Programming Language with Python')
     env = {}
-      
+
     while True:
         try:
             text = input('Hallo ^u^ => ')
-          
+
         except EOFError:
             break
-          
+
         if text:
             tree = parser.parse(lexer.tokenize(text))
             ZetaExecute(tree, env)
