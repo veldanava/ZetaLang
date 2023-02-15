@@ -21,7 +21,7 @@ A simp programming language with Lexer Parser python >w< <br> > this is a valent
 
 ## ♟ run:
 ```zsh
-> python zeta.py
+> python playground.zeta
 ```
 
 ## 🌌 support me:
