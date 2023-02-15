@@ -9,7 +9,9 @@ A simp programming language with Lexer Parser python >w< <br> > this is a valent
 ## 🪐 Example:
 <details>
 <summary><b>Click here</b></summary>
+ 
 ![2023-02-15](https://user-images.githubusercontent.com/86060881/219056265-847e2ac1-2a4e-4857-8f6a-c6059f5c70e5.png)
+
 </details>
 
 ## 🎯 install dependencies:
