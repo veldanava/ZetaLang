@@ -7,7 +7,10 @@ A simp programming language with Lexer Parser python >w< <br> > this is a valent
 </div>
 
 ## 🪐 Example:
-![2023-02-13](https://user-images.githubusercontent.com/86060881/218749276-c1795f40-7858-4eb1-a795-9baea984e986.png)
+<details>
+<summary><b>Click here</b></summary>
+![2023-02-15](https://user-images.githubusercontent.com/86060881/219056265-847e2ac1-2a4e-4857-8f6a-c6059f5c70e5.png)
+</details>
 
 ## 🎯 install dependencies:
 ```zsh
