@@ -1,6 +1,6 @@
 <div align="center">
- 
-![zeta](https://user-images.githubusercontent.com/86060881/219283545-29e35d55-ffea-4b8b-95e7-e04ddd1930c7.png)
+
+ ![zetaa](https://user-images.githubusercontent.com/86060881/219285279-06b703c8-5ba1-447b-919b-3f9942d79f65.png)
 
  <h2>🧩 Zeta.Lang</h2>
 A simp programming language with Lexer Parser python >w< <br> > this is a valentine days present to my wife Vestia Zeta < <br>
