@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://stickerly.pstatic.net/sticker_pack/zPu9DQhcCdOhcGmN6IGxCA/4LU4EK/13/cce2a0fd-ccfc-4577-9a66-ef4e6b0e3ead.png" alt="zeta">
+![zeta](https://user-images.githubusercontent.com/86060881/219283545-29e35d55-ffea-4b8b-95e7-e04ddd1930c7.png)
 <h2>🧩 ZetaLang</h2>
 A simp programming language with Lexer Parser python >w< <br> > this is a valentine days present to my wife Vestia Zeta < <br>
  
